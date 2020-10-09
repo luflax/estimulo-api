@@ -7,5 +7,11 @@ package com.estimulo.estimuloapp.repository;
 import com.estimulo.estimuloapp.model.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.Optional;
+
 public interface UserRepository extends JpaRepository<UserEntity, String> {
+
+  Optional<UserEntity> findUserEntityByUsername(String username);
+
+  Optional<UserEntity> findUserEntityByEmail(String username);
 }
