@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/user")
 @Api(tags = "User")
@@ -29,7 +31,7 @@ public class UserController {
 
   @PostMapping
   public ResponseEntity<BaseResponse<RegisterResponse>> register(
-      @RequestBody RegisterRequest requestBody) {
+      @Valid @RequestBody RegisterRequest requestBody) {
 
     RegisterResponse registerResponse = userService.register(requestBody);
 

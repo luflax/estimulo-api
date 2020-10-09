@@ -9,4 +9,8 @@ import com.estimulo.estimuloapp.model.response.RegisterResponse;
 
 public interface UserService {
   RegisterResponse register(RegisterRequest registerRequest);
+
+  void validateUsernameUniqueness(String username);
+
+  void validateEmailUniqueness(String email);
 }
