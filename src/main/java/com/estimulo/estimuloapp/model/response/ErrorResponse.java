@@ -18,8 +18,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class BaseResponse<T> {
-  private List<ErrorResponse> errors;
-  private T response;
-  @Default private String timestamp = Instant.now().toString();
+public class ErrorResponse {
+  private String errorCode;
+  private String message;
 }
