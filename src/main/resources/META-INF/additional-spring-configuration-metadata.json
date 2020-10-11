@@ -8,6 +8,11 @@
     {
       "name": "redis.url",
       "type": "java.lang.String",
-      "description": "Description for redis.url."
+      "description": "Redis connection url."
+    },
+    {
+      "name": "redis.user.time_to_live",
+      "type": "java.lang.String",
+      "description": "Redis user token time to live."
     }
   ] }
