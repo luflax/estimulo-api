@@ -17,8 +17,8 @@ import lombok.ToString.Exclude;
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class LoginRequest {
-  @ApiModelProperty("User's username")
-  private String username;
+  @ApiModelProperty("User's email")
+  private String email;
 
   @ApiModelProperty("User's password")
   @Exclude

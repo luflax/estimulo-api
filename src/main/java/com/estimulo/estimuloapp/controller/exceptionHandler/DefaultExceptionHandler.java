@@ -5,6 +5,8 @@
 package com.estimulo.estimuloapp.controller.exceptionHandler;
 
 import com.estimulo.estimuloapp.exception.BadRequestException;
+import com.estimulo.estimuloapp.exception.NotFoundException;
+import com.estimulo.estimuloapp.exception.UnAuthorizedException;
 import com.estimulo.estimuloapp.model.response.BaseResponse;
 import com.estimulo.estimuloapp.model.response.ErrorResponse;
 import lombok.extern.log4j.Log4j2;
@@ -43,7 +45,8 @@ public class DefaultExceptionHandler {
   }
 
   @ExceptionHandler({BadRequestException.class})
-  public ResponseEntity<BaseResponse<Void>> handlerBadRequestException(BadRequestException exception) {
+  public ResponseEntity<BaseResponse<Void>> handlerBadRequestException(
+      BadRequestException exception) {
     ErrorResponse error =
         ErrorResponse.builder()
             .errorCode(exception.getMessage())
@@ -55,8 +58,36 @@ public class DefaultExceptionHandler {
         HttpStatus.BAD_REQUEST);
   }
 
+  @ExceptionHandler({UnAuthorizedException.class})
+  public ResponseEntity<BaseResponse<Void>> handlerUnAuthorizedException(
+      UnAuthorizedException exception) {
+    ErrorResponse error =
+        ErrorResponse.builder()
+            .errorCode(exception.getMessage())
+            .message(exception.getFriendlyMessage())
+            .build();
+
+    return new ResponseEntity<>(
+        BaseResponse.<Void>builder().errors(Collections.singletonList(error)).build(),
+        HttpStatus.UNAUTHORIZED);
+  }
+
+  @ExceptionHandler({NotFoundException.class})
+  public ResponseEntity<BaseResponse<Void>> handlerNotFoundException(NotFoundException exception) {
+    ErrorResponse error =
+        ErrorResponse.builder()
+            .errorCode(exception.getMessage())
+            .message(exception.getFriendlyMessage())
+            .build();
+
+    return new ResponseEntity<>(
+        BaseResponse.<Void>builder().errors(Collections.singletonList(error)).build(),
+        HttpStatus.NOT_FOUND);
+  }
+
   @ExceptionHandler({MethodArgumentNotValidException.class})
-  public ResponseEntity<BaseResponse<Void>> handlerArgumentNotValidException(MethodArgumentNotValidException exception) {
+  public ResponseEntity<BaseResponse<Void>> handlerArgumentNotValidException(
+      MethodArgumentNotValidException exception) {
     BindingResult result = exception.getBindingResult();
     List<FieldError> fieldErrors = result.getFieldErrors();
 

@@ -7,7 +7,7 @@ package com.estimulo.estimuloapp.controller;
 import com.estimulo.estimuloapp.model.request.LoginRequest;
 import com.estimulo.estimuloapp.model.response.BaseResponse;
 import com.estimulo.estimuloapp.model.response.LoginResponse;
-import com.estimulo.estimuloapp.service.UserService;
+import com.estimulo.estimuloapp.service.AuthService;
 import io.swagger.annotations.Api;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
@@ -19,27 +19,25 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @Api(tags = "Auth")
-@RequestMapping(value = "/auth")
+@RequestMapping(value = "/v1/auth")
 @Log4j2
 public class AuthController {
 
-  private final UserService userService;
+  private final AuthService authService;
 
-  public AuthController(UserService userService) {
-    this.userService = userService;
+  public AuthController(AuthService authService) {
+    this.authService = authService;
   }
 
   @PostMapping("/login")
   public ResponseEntity<BaseResponse<LoginResponse>> login(@RequestBody LoginRequest requestBody) {
 
-    log.info("Login in user: {}", requestBody.getUsername());
+    log.info("Login in user: {}", requestBody.getEmail());
 
-    //userService.register(requestBody);
+    LoginResponse loginResponse = authService.login(requestBody);
 
-    BaseResponse<LoginResponse> loginResponse =
-        BaseResponse.<LoginResponse>builder()
-            .response(LoginResponse.builder().token("tokeeeeeen").build())
-            .build();
-    return new ResponseEntity<>(loginResponse, HttpStatus.OK);
+    BaseResponse<LoginResponse> response =
+        BaseResponse.<LoginResponse>builder().response(loginResponse).build();
+    return new ResponseEntity<>(response, HttpStatus.OK);
   }
 }
