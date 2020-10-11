@@ -31,13 +31,12 @@ public class UserEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  private String username;
-
   private String passwordHash;
 
   private String firstName;
   private String lastName;
   private String email;
+  private String role;
 
   @OneToMany(
       mappedBy = "user",
@@ -50,7 +49,7 @@ public class UserEntity {
   private List<AddressEntity> addresses;
 
   public void addAddress(AddressEntity addressEntity) {
-    if(Objects.isNull(addresses)){
+    if (Objects.isNull(addresses)) {
       this.addresses = new ArrayList<>();
     }
     this.addresses.add(addressEntity);
@@ -58,7 +57,7 @@ public class UserEntity {
   }
 
   public void addPhone(UserPhoneEntity userPhoneEntity) {
-    if(Objects.isNull(phones)){
+    if (Objects.isNull(phones)) {
       this.phones = new ArrayList<>();
     }
     this.phones.add(userPhoneEntity);

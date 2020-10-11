@@ -4,6 +4,7 @@
 
 package com.estimulo.estimuloapp.service;
 
+import com.estimulo.estimuloapp.enumeration.Role;
 import com.estimulo.estimuloapp.exception.BadRequestException;
 import com.estimulo.estimuloapp.model.entity.AddressEntity;
 import com.estimulo.estimuloapp.model.entity.CountryEntity;
@@ -19,7 +20,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 import static com.estimulo.estimuloapp.exception.ApplicationErrorCode.EMAIL_ALREADY_REGISTERED;
-import static com.estimulo.estimuloapp.exception.ApplicationErrorCode.USERNAME_ALREADY_REGISTERED;
+import static com.estimulo.estimuloapp.exception.ApplicationErrorCode.USER_NOT_FOUND;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -32,7 +33,6 @@ public class UserServiceImpl implements UserService {
   /** {@inheritDoc} */
   public RegisterResponse register(RegisterRequest registerRequest) {
     // TODO: add more validations
-    validateUsernameUniqueness(registerRequest.getUsername());
     validateEmailUniqueness(registerRequest.getEmail());
 
     AddressEntity addressEntity = buildAddressEntity(registerRequest);
@@ -45,21 +45,22 @@ public class UserServiceImpl implements UserService {
   }
 
   /** {@inheritDoc} */
-  public void validateUsernameUniqueness(String username) {
-    Optional<UserEntity> userEntityOptional = userRepository.findUserEntityByUsername(username);
-    if (userEntityOptional.isPresent()) {
-      throw new BadRequestException(
-          USERNAME_ALREADY_REGISTERED, String.format("Username: %s is already in use", username));
-    }
-  }
-
-  /** {@inheritDoc} */
   public void validateEmailUniqueness(String email) {
     Optional<UserEntity> userEntityOptional = userRepository.findUserEntityByEmail(email);
     if (userEntityOptional.isPresent()) {
       throw new BadRequestException(
           EMAIL_ALREADY_REGISTERED, String.format("Email: %s is already in use", email));
     }
+  }
+
+  /** {@inheritDoc} */
+  public UserEntity getUser(String email) {
+    Optional<UserEntity> userEntity = userRepository.findUserEntityByEmail(email);
+    if (!userEntity.isPresent()) {
+      throw new BadRequestException(
+          USER_NOT_FOUND, String.format("User with email %s was not found", email));
+    }
+    return userEntity.get();
   }
 
   /**
@@ -78,11 +79,11 @@ public class UserServiceImpl implements UserService {
 
     UserEntity userEntity =
         UserEntity.builder()
-            .username(registerRequest.getUsername())
             .email(registerRequest.getEmail())
             .firstName(registerRequest.getFirstName())
             .lastName(registerRequest.getLastName())
             .passwordHash(passwordHash)
+            .role(Role.USER.name())
             .build();
 
     userEntity.addAddress(addressEntity);
