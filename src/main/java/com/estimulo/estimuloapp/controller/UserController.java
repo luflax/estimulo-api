@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/v1/user")
 @Api(tags = "User")
 public class UserController {
 

@@ -25,11 +25,11 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @GroupSequence({NotBlankValidator.class, SizeValidatorForCharSequence.class, RegisterRequest.class})
 public class RegisterRequest {
-
-  @Size(min = 5, max = 30)
+  @Email
+  @Size(max = 75)
   @NotBlank
-  @ApiModelProperty("User's username")
-  private String username;
+  @ApiModelProperty("User's email address")
+  private String email;
 
   @Size(min = 8, max = 30)
   @Exclude
@@ -46,12 +46,6 @@ public class RegisterRequest {
   @NotBlank
   @ApiModelProperty("User's last name")
   private String lastName;
-
-  @Email
-  @Size(max = 75)
-  @NotBlank
-  @ApiModelProperty("User's email address")
-  private String email;
 
   @Size(max = 20)
   @NotBlank
