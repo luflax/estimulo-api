@@ -7,6 +7,7 @@ package com.estimulo.estimuloapp.service;
 import com.estimulo.estimuloapp.exception.BadRequestException;
 import com.estimulo.estimuloapp.model.entity.UserEntity;
 import com.estimulo.estimuloapp.model.request.RegisterRequest;
+import com.estimulo.estimuloapp.model.request.UserPatchProfileRequest;
 import com.estimulo.estimuloapp.model.response.RegisterResponse;
 
 public interface UserService {
@@ -33,4 +34,12 @@ public interface UserService {
    * @return {@link UserEntity} containing the user data from database
    */
   UserEntity getUser(String email);
+
+  /**
+   * Updates the user profile
+   *
+   * @param accessToken The user access token
+   * @param userPatchProfileRequest The patch user request body
+   */
+  void patchProfile(String accessToken, UserPatchProfileRequest userPatchProfileRequest);
 }

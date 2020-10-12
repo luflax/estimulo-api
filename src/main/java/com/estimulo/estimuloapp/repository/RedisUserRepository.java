@@ -34,11 +34,10 @@ public class RedisUserRepository {
   /**
    * Creates or updates a redis user model entry into Redis database
    *
-   * @param email The user's email, used as part of the key
-   * @param token The user's authentication token, used as part of the key
+   * @param key The redis user key
    * @param redisUserModel The user's data model
    */
-  public void store(String email, String token, RedisUserModel redisUserModel) {
+  public void store(String key, RedisUserModel redisUserModel) {
     String redisUserModelAsString;
     try {
       redisUserModelAsString = objectMapper.writeValueAsString(redisUserModel);
@@ -47,7 +46,11 @@ public class RedisUserRepository {
       throw new InternalServerErrorException(
           INTERNAL_SERVER_ERROR.name(), INTERNAL_SERVER_ERROR_MESSAGE);
     }
-    redisConnection.sync().set(String.format("%s:%s", email, token), redisUserModelAsString);
+    redisConnection.sync().set(key, redisUserModelAsString);
+  }
+
+  public void erase(String key){
+    redisConnection.sync().del(key);
   }
 
   public Optional<String> findKey(String pattern) {

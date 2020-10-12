@@ -5,14 +5,18 @@
 package com.estimulo.estimuloapp.controller;
 
 import com.estimulo.estimuloapp.model.request.RegisterRequest;
+import com.estimulo.estimuloapp.model.request.UserPatchProfileRequest;
 import com.estimulo.estimuloapp.model.response.BaseResponse;
 import com.estimulo.estimuloapp.model.response.RegisterResponse;
 import com.estimulo.estimuloapp.service.UserService;
 import io.swagger.annotations.Api;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,7 +33,7 @@ public class UserController {
     this.userService = userService;
   }
 
-  @PostMapping
+  @PostMapping("/register")
   public ResponseEntity<BaseResponse<RegisterResponse>> register(
       @Valid @RequestBody RegisterRequest requestBody) {
 
@@ -38,5 +42,15 @@ public class UserController {
     BaseResponse<RegisterResponse> response =
         BaseResponse.<RegisterResponse>builder().response(registerResponse).build();
     return new ResponseEntity<>(response, HttpStatus.OK);
+  }
+
+  @PatchMapping("/profile")
+  public ResponseEntity<BaseResponse<Void>> patchProfile(
+      @RequestHeader("accessToken") String accessToken,
+      @Valid @RequestBody UserPatchProfileRequest userPatchProfileRequest) {
+
+    userService.patchProfile(accessToken, userPatchProfileRequest);
+
+    return new ResponseEntity<>(BaseResponse.<Void>builder().build(), HttpStatus.OK);
   }
 }

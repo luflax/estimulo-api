@@ -9,4 +9,5 @@ public class ApplicationErrorCode {
   public static String EMAIL_ALREADY_REGISTERED = "EMAIL_ALREADY_REGISTERED";
   public static String USER_NOT_FOUND = "USER_NOT_FOUND";
   public static String PASSWORD_MISMATCH = "PASSWORD_MISMATCH";
+  public static String INVALID_TOKEN = "INVALID_TOKEN";
 }

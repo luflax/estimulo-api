@@ -31,7 +31,7 @@ public class AuthServiceImpl implements AuthService {
     if (!userEntity.getPasswordHash().equals(passwordHash)) {
       throw new UnAuthorizedException(PASSWORD_MISMATCH, "The informed password is incorrect");
     }
-    String accessToken = redisUserService.retrieveToken(loginRequest.getEmail());
+    String accessToken = redisUserService.retrieveToken(userEntity.getId().toString());
     return LoginResponse.builder().token(accessToken).build();
   }
 }
