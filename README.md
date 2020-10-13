@@ -6,7 +6,8 @@ The ideia is to provide a mobile application for entrepreneurs in Brazil with co
 and also, provide a platform to connect them with experts that could help them with good advises about the business.
 
 ## Used technologies:
-- SpringBoot
+- Java
+- Spring Boot
 - Service-oriented architecture
 - Gradle
 - PostgreSQL
