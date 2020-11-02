@@ -38,8 +38,8 @@ public interface UserService {
   /**
    * Updates the user profile
    *
-   * @param accessToken The user access token
+   * @param userId The user id
    * @param userPatchProfileRequest The patch user request body
    */
-  void patchProfile(String accessToken, UserPatchProfileRequest userPatchProfileRequest);
+  void patchProfile(String userId, UserPatchProfileRequest userPatchProfileRequest);
 }

@@ -72,11 +72,10 @@ public class UserServiceImpl implements UserService {
 
   /** {@inheritDoc} */
   @Transactional
-  public void patchProfile(String accessToken, UserPatchProfileRequest userPatchProfileRequest) {
-    Long userId = Long.valueOf(redisUserService.validateAccessToken(accessToken));
+  public void patchProfile(String userId, UserPatchProfileRequest userPatchProfileRequest) {
 
     // Retrieve user existing entity in database
-    Optional<UserEntity> userEntityOptional = userRepository.findById(userId);
+    Optional<UserEntity> userEntityOptional = userRepository.findById(Long.valueOf(userId));
     if (!userEntityOptional.isPresent()) {
       throw new BadRequestException(
           USER_NOT_FOUND, String.format("User with id %s was not found", userId));
@@ -88,11 +87,13 @@ public class UserServiceImpl implements UserService {
 
     // 1. General information
     String oldEmail = userEntity.getEmail();
-    userEntity.setEmail(Optional.of(userPatchProfileRequest.getEmail()).orElse(oldEmail));
+    userEntity.setEmail(Optional.ofNullable(userPatchProfileRequest.getEmail()).orElse(oldEmail));
     userEntity.setFirstName(
-        Optional.of(userPatchProfileRequest.getFirstName()).orElse(userEntity.getFirstName()));
+        Optional.ofNullable(userPatchProfileRequest.getFirstName())
+            .orElse(userEntity.getFirstName()));
     userEntity.setLastName(
-        Optional.of(userPatchProfileRequest.getLastName()).orElse(userEntity.getLastName()));
+        Optional.ofNullable(userPatchProfileRequest.getLastName())
+            .orElse(userEntity.getLastName()));
 
     // 2. Address information
     if (Objects.nonNull(userPatchProfileRequest.getAddress())) {
