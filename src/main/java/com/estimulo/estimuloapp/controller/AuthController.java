@@ -10,7 +10,6 @@ import com.estimulo.estimuloapp.model.response.BaseResponse;
 import com.estimulo.estimuloapp.model.response.LoginResponse;
 import com.estimulo.estimuloapp.model.response.RegisterResponse;
 import com.estimulo.estimuloapp.service.AuthService;
-import com.estimulo.estimuloapp.service.EmailService;
 import com.estimulo.estimuloapp.service.UserService;
 import io.swagger.annotations.Api;
 import lombok.extern.log4j.Log4j2;
@@ -32,13 +31,10 @@ public class AuthController {
 
   private final AuthService authService;
   private final UserService userService;
-  private final EmailService emailService;
 
-  public AuthController(
-      AuthService authService, UserService userService, EmailService emailService) {
+  public AuthController(AuthService authService, UserService userService) {
     this.authService = authService;
     this.userService = userService;
-    this.emailService = emailService;
   }
 
   @PostMapping("/login")
