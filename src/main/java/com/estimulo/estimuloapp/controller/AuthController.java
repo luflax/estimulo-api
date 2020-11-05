@@ -70,6 +70,6 @@ public class AuthController {
 
     authService.resetPassword(emailAddress);
 
-    return new ResponseEntity<>(null, HttpStatus.OK);
+    return new ResponseEntity<>(HttpStatus.OK);
   }
 }
