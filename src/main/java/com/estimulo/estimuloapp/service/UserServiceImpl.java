@@ -135,6 +135,11 @@ public class UserServiceImpl implements UserService {
     userRepository.save(userEntity);
   }
 
+  /** {@inheritDoc} */
+  public void saveUser(UserEntity userEntity) {
+    userRepository.save(userEntity);
+  }
+
   /**
    * Builds an address entity based on the patch profile request
    *

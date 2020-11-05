@@ -19,19 +19,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping(value = "/v1/user")
-@Api(tags = "User")
-public class UserController {
+@RequestMapping(value = "/v1/user-profile")
+@Api(tags = "User Profile")
+public class UserProfileController {
 
   private final UserService userService;
 
-  public UserController(UserService userService) {
+  public UserProfileController(UserService userService) {
     this.userService = userService;
   }
 
-  @PatchMapping(
-      value = "/profile",
-      headers = {"accessToken"})
+  @PatchMapping(headers = {"accessToken"})
   public ResponseEntity<BaseResponse<Void>> patchProfile(
       @Valid @RequestBody UserPatchProfileRequest userPatchProfileRequest,
       HttpServletRequest httpServletRequest) {

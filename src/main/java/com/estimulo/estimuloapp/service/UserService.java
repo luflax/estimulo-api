@@ -42,4 +42,11 @@ public interface UserService {
    * @param userPatchProfileRequest The patch user request body
    */
   void patchProfile(String userId, UserPatchProfileRequest userPatchProfileRequest);
+
+  /**
+   * Saves user entity to the database
+   *
+   * @param userEntity The user entity
+   */
+  void saveUser(UserEntity userEntity);
 }

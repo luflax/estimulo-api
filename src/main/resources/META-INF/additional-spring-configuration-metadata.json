@@ -14,5 +14,20 @@
       "name": "redis.user.time_to_live",
       "type": "java.lang.String",
       "description": "Redis user token time to live."
+    },
+    {
+      "name": "mail.gmail.password",
+      "type": "java.lang.String",
+      "description": "Gmail user's password."
+    },
+    {
+      "name": "mail.gmail.email",
+      "type": "java.lang.String",
+      "description": "Gmail user's email address."
+    },
+    {
+      "name": "mail.email.fromName",
+      "type": "java.lang.String",
+      "description": "Description for mail.email.fromName."
     }
   ] }

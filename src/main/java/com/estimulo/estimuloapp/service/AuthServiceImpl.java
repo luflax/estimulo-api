@@ -17,10 +17,13 @@ import static com.estimulo.estimuloapp.exception.ApplicationErrorCode.PASSWORD_M
 public class AuthServiceImpl implements AuthService {
   private final UserService userService;
   private final RedisUserService redisUserService;
+  private final EmailService emailService;
 
-  public AuthServiceImpl(UserService userService, RedisUserService redisUserService) {
+  public AuthServiceImpl(
+      UserService userService, RedisUserService redisUserService, EmailService emailService) {
     this.userService = userService;
     this.redisUserService = redisUserService;
+    this.emailService = emailService;
   }
 
   /** {@inheritDoc} */
@@ -33,5 +36,22 @@ public class AuthServiceImpl implements AuthService {
     }
     String accessToken = redisUserService.retrieveToken(userEntity.getId().toString());
     return LoginResponse.builder().token(accessToken).build();
+  }
+
+  /** {@inheritDoc} */
+  public void resetPassword(String emailAddress) {
+    UserEntity userEntity = userService.getUser(emailAddress);
+
+    String recoveryToken = Util.generateSha1HashCode();
+    userEntity.setRecoveryPasswordToken(recoveryToken);
+    userService.saveUser(userEntity);
+
+    emailService.sendEmail(
+        emailAddress,
+        "Seu código de recuperação de senha",
+        String.format(
+            "<h3>Recuperação de senha</h3> <br>Seu código de recuperação de senha é: %s",
+            recoveryToken),
+        Boolean.TRUE);
   }
 }
