@@ -15,6 +15,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.Random;
+import java.util.stream.IntStream;
 
 @Log4j2
 public class Util {
@@ -47,5 +48,17 @@ public class Util {
       log.error("Algorithm {} was not found", SHA_1);
       throw new InternalServerErrorException();
     }
+  }
+
+  /**
+   * Generates a random recovery code with 5 decimal places
+   *
+   * @return The recovery code
+   */
+  public static String generateRecoveryCode() {
+    Random random = new Random();
+    IntStream ints = random.ints(1, 10000, 99999);
+    int recoveryCode = ints.findFirst().orElse(0);
+    return Integer.toString(recoveryCode);
   }
 }

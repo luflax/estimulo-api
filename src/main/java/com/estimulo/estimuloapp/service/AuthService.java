@@ -16,11 +16,4 @@ public interface AuthService {
    * @return {@link LoginResponse} containing the access token
    */
   LoginResponse login(LoginRequest loginRequest);
-
-  /**
-   * Generates a password recovery token and send it through email
-   *
-   * @param emailAddress The user's email address
-   */
-  void resetPassword(String emailAddress);
 }

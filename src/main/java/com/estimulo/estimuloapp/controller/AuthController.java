@@ -59,13 +59,4 @@ public class AuthController {
         BaseResponse.<RegisterResponse>builder().response(registerResponse).build();
     return new ResponseEntity<>(response, HttpStatus.OK);
   }
-
-  @PostMapping("/reset-password")
-  public ResponseEntity<BaseResponse<Void>> resetPassword(
-      @RequestParam("emailAddress") String emailAddress) {
-
-    authService.resetPassword(emailAddress);
-
-    return new ResponseEntity<>(HttpStatus.OK);
-  }
 }

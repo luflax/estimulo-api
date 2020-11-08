@@ -37,21 +37,4 @@ public class AuthServiceImpl implements AuthService {
     String accessToken = redisUserService.retrieveToken(userEntity.getId().toString());
     return LoginResponse.builder().token(accessToken).build();
   }
-
-  /** {@inheritDoc} */
-  public void resetPassword(String emailAddress) {
-    UserEntity userEntity = userService.getUser(emailAddress);
-
-    String recoveryToken = Util.generateSha1HashCode();
-    userEntity.setRecoveryPasswordToken(recoveryToken);
-    userService.saveUser(userEntity);
-
-    emailService.sendEmail(
-        emailAddress,
-        "Seu código de recuperação de senha",
-        String.format(
-            "<h3>Recuperação de senha</h3> <br>Seu código de recuperação de senha é: %s",
-            recoveryToken),
-        Boolean.TRUE);
-  }
 }

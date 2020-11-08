@@ -37,6 +37,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   @Override
   public void configure(WebSecurity web) {
     web.ignoring().antMatchers("/v1/auth/*");
+    web.ignoring().antMatchers("/v1/password/*");
     web.ignoring().mvcMatchers(HttpMethod.OPTIONS, "/**");
     web.ignoring()
         .mvcMatchers(
