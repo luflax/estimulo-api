@@ -18,7 +18,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
@@ -53,7 +52,7 @@ public class AuthController {
   public ResponseEntity<BaseResponse<RegisterResponse>> register(
       @Valid @RequestBody RegisterRequest requestBody) {
 
-    RegisterResponse registerResponse = userService.register(requestBody);
+    RegisterResponse registerResponse = authService.register(requestBody);
 
     BaseResponse<RegisterResponse> response =
         BaseResponse.<RegisterResponse>builder().response(registerResponse).build();

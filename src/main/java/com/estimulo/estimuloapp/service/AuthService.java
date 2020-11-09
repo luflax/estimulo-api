@@ -5,7 +5,9 @@
 package com.estimulo.estimuloapp.service;
 
 import com.estimulo.estimuloapp.model.request.LoginRequest;
+import com.estimulo.estimuloapp.model.request.RegisterRequest;
 import com.estimulo.estimuloapp.model.response.LoginResponse;
+import com.estimulo.estimuloapp.model.response.RegisterResponse;
 
 public interface AuthService {
 
@@ -16,4 +18,12 @@ public interface AuthService {
    * @return {@link LoginResponse} containing the access token
    */
   LoginResponse login(LoginRequest loginRequest);
+
+  /**
+   * Creates a new user with the received data in the database
+   *
+   * @param registerRequest The register request body
+   * @return {@link RegisterResponse} with the created user data
+   */
+  RegisterResponse register(RegisterRequest registerRequest);
 }

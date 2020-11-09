@@ -6,18 +6,8 @@ package com.estimulo.estimuloapp.service;
 
 import com.estimulo.estimuloapp.exception.BadRequestException;
 import com.estimulo.estimuloapp.model.entity.UserEntity;
-import com.estimulo.estimuloapp.model.request.RegisterRequest;
-import com.estimulo.estimuloapp.model.request.UserPatchProfileRequest;
-import com.estimulo.estimuloapp.model.response.RegisterResponse;
 
 public interface UserService {
-  /**
-   * Creates a new user with the received data in the database
-   *
-   * @param registerRequest The register request body
-   * @return {@link RegisterResponse} with the created user data
-   */
-  RegisterResponse register(RegisterRequest registerRequest);
 
   /**
    * Validates if a email is available for use in database
@@ -33,20 +23,21 @@ public interface UserService {
    * @param email The email address
    * @return {@link UserEntity} containing the user data from database
    */
-  UserEntity getUser(String email);
+  UserEntity getUserByEmail(String email);
 
   /**
-   * Updates the user profile
+   * Gets the user entity by id
    *
-   * @param userId The user id
-   * @param userPatchProfileRequest The patch user request body
+   * @param userId The user's id
+   * @return {@link UserEntity} containing the user data from database
    */
-  void patchProfile(String userId, UserPatchProfileRequest userPatchProfileRequest);
+  UserEntity getUser(String userId);
 
   /**
    * Saves user entity to the database
    *
    * @param userEntity The user entity
+   * @return {@link UserEntity} containing the user data from database
    */
-  void saveUser(UserEntity userEntity);
+  UserEntity saveUser(UserEntity userEntity);
 }

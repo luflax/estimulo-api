@@ -34,7 +34,7 @@ public class PasswordServiceImpl implements PasswordService {
 
   /** {@inheritDoc} */
   public void resetPassword(String emailAddress) {
-    UserEntity userEntity = userService.getUser(emailAddress);
+    UserEntity userEntity = userService.getUserByEmail(emailAddress);
 
     String recoveryCode = Util.generateRecoveryCode();
     userEntity.setRecoveryPasswordCode(recoveryCode);
@@ -52,7 +52,7 @@ public class PasswordServiceImpl implements PasswordService {
 
   /** {@inheritDoc} */
   public void verifyRecoveryCode(String emailAddress, String recoveryCode) {
-    UserEntity userEntity = userService.getUser(emailAddress);
+    UserEntity userEntity = userService.getUserByEmail(emailAddress);
 
     if (Boolean.FALSE.equals(userEntity.getRecoveryPasswordCode().equals(recoveryCode))) {
       throw new BadRequestException(
@@ -70,7 +70,7 @@ public class PasswordServiceImpl implements PasswordService {
     verifyRecoveryCode(
         changePasswordRequest.getEmailAddress(), changePasswordRequest.getRecoveryCode());
 
-    UserEntity userEntity = userService.getUser(changePasswordRequest.getEmailAddress());
+    UserEntity userEntity = userService.getUserByEmail(changePasswordRequest.getEmailAddress());
 
     String passwordHash = Util.generateSha1HashCode(changePasswordRequest.getNewPassword());
     userEntity.setPasswordHash(passwordHash);
