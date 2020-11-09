@@ -29,5 +29,10 @@
       "name": "mail.email.fromName",
       "type": "java.lang.String",
       "description": "Description for mail.email.fromName."
+    },
+    {
+      "name": "recoveryCode.minutes",
+      "type": "java.lang.String",
+      "description": "The recovery code expiration time in minutes."
     }
   ] }
