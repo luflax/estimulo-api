@@ -12,7 +12,6 @@ import io.swagger.annotations.ApiParam;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,9 +41,11 @@ public class PasswordController {
     return new ResponseEntity<>(HttpStatus.OK);
   }
 
-  @GetMapping("/verify-recovery-code")
+  @PostMapping("/verify-recovery-code")
+  @Valid
   public ResponseEntity<BaseResponse<Void>> verifyRecoveryCode(
-      @ApiParam("User's email address") @NotBlank @RequestParam("emailAddress") String emailAddress,
+      @ApiParam(value = "User's email address") @NotBlank @RequestParam("emailAddress")
+          String emailAddress,
       @ApiParam("Password recovery code to be verified") @NotBlank @RequestParam("recoveryCode")
           String recoveryCode) {
 

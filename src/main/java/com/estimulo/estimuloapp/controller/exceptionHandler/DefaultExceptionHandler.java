@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -111,5 +112,27 @@ public class DefaultExceptionHandler {
 
     return new ResponseEntity<>(
         BaseResponse.<Void>builder().errors(errorsList).build(), HttpStatus.BAD_REQUEST);
+  }
+
+  @ExceptionHandler({MissingServletRequestParameterException.class})
+  public ResponseEntity<BaseResponse<Void>> handlerMissingServletRequestParameterException(
+      MissingServletRequestParameterException exception) {
+
+    String formattedErrorMessage =
+        String.format("%s: %s", exception.getParameterName(), "must be informed");
+
+    String formattedErrorCode =
+        String.format("%s_INVALID_%s", exception.getParameterName(), "NOT_INFORMED")
+            .toUpperCase();
+
+    ErrorResponse error =
+        ErrorResponse.builder()
+            .errorCode(formattedErrorCode)
+            .message(formattedErrorMessage)
+            .build();
+
+    return new ResponseEntity<>(
+        BaseResponse.<Void>builder().errors(Collections.singletonList(error)).build(),
+        HttpStatus.BAD_REQUEST);
   }
 }
