@@ -43,10 +43,10 @@ public class PasswordServiceImpl implements PasswordService {
 
     emailService.sendEmail(
         emailAddress,
+        "Seu código de recuperação de senha",
         String.format(
             "<h3>Recuperação de senha</h3> <br>Seu código de recuperação de senha é: %s",
             recoveryCode),
-        "Seu código de recuperação de senha",
         Boolean.TRUE);
   }
 
