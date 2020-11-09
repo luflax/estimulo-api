@@ -45,7 +45,7 @@ public class PasswordController {
     return new ResponseEntity<>(HttpStatus.OK);
   }
 
-  @GetMapping("/verify-recovery-code/{recoveryCode}")
+  @GetMapping("/verify-recovery-code")
   public ResponseEntity<BaseResponse<Void>> verifyRecoveryCode(
       @ApiParam("User's email address")
           @Email
@@ -53,7 +53,7 @@ public class PasswordController {
           @NotBlank
           @RequestParam("emailAddress")
           String emailAddress,
-      @ApiParam("Password recovery code to be verified") @NotBlank @PathVariable("recoveryCode")
+      @ApiParam("Password recovery code to be verified") @NotBlank @RequestParam("recoveryCode")
           String recoveryCode) {
 
     passwordService.verifyRecoveryCode(emailAddress, recoveryCode);
